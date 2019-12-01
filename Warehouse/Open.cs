@@ -13,19 +13,28 @@ namespace Warehouse
             string path = Path.Combine(root, "test.txt");
             string pattern = "#.*";
             List<string> result = new List<string>();
-            using (var stream = new StreamReader(path))
+            if (File.Exists(path))
             {
-                var lines = File.ReadAllLines(path);
-                foreach (var line in lines)
+                using (var stream = new StreamReader(path))
                 {
-                    var match = Regex.Match(line, pattern);
-                    if (!match.Success)
+                    var lines = File.ReadAllLines(path);
+                    foreach (var line in lines)
                     {
-                        result.Add(line);
+                        var match = Regex.Match(line, pattern);
+                        if (!match.Success)
+                        {
+                            result.Add(line);
+                        }
                     }
                 }
+                 return result;
+            }
+            else
+            {
+                Console.WriteLine("File not found");
             }
             return result;
+           
         }
     }
 }
